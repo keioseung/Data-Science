@@ -3,7 +3,12 @@
 export const API_BASE = '/api/backend'
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(`${API_BASE}${path}`, init)
+  const res = await fetch(`${API_BASE}${path}`, {
+    ...init,
+    // Let Next deploy/platform know to keep this request server-side if possible
+    cache: 'no-store',
+    next: { revalidate: 0 },
+  } as any)
   if (!res.ok) {
     const text = await res.text()
     throw new Error(text || res.statusText)

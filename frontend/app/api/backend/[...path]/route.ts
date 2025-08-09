@@ -1,5 +1,8 @@
 import { NextResponse } from 'next/server'
 
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 const HOP_BY_HOP = new Set([
   'connection',
   'keep-alive',
@@ -50,5 +53,6 @@ async function proxy(request: Request, context: { params: { path: string[] } }) 
 }
 
 export { proxy as GET, proxy as POST, proxy as PUT, proxy as PATCH, proxy as DELETE }
+export function OPTIONS() { return NextResponse.json({ ok: true }) }
 
 

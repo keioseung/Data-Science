@@ -133,6 +133,8 @@ def _basic_stats(df: pd.DataFrame) -> Dict[str, Any]:
 
 @app.post("/upload")
 async def upload_dataset(file: UploadFile = File(...)) -> Dict[str, Any]:
+    # Ensure read pointer at 0 for some containers
+    await file.seek(0)
     df = _read_file_to_dataframe(file)
     session_id = str(uuid.uuid4())
     SESSION_STORE[session_id] = {
