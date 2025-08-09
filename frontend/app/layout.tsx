@@ -9,6 +9,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
+      <head>
+        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+        <link rel="manifest" href="/manifest.webmanifest" />
+      </head>
       <body>{children}</body>
     </html>
   )

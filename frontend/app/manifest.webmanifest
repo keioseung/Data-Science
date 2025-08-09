@@ -1,0 +1,17 @@
+{
+  "name": "DataFlow",
+  "short_name": "DataFlow",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "64x64",
+      "type": "image/svg+xml"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#4f46e5",
+  "background_color": "#ffffff"
+}
+
+

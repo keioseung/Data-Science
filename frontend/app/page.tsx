@@ -134,7 +134,7 @@ export default function Page() {
   }
 
   return (
-    <div className="container mx-auto max-w-[1400px] p-5">
+    <div className="container mx-auto max-w-[1400px] p-5" suppressHydrationWarning>
       {/* Header */}
       <div className="card-glass flex items-center justify-between p-6 mb-6">
         <div className="text-primary text-2xl font-bold flex items-center gap-3">
