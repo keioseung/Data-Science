@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { apiDetectTarget, apiEvaluate, apiExplore, apiPredict, apiPreprocess, apiTrain, apiUpload } from '@/lib/api'
+import { apiDetectTarget, apiEvaluate, apiExplore, apiPredict, apiPreprocess, apiTrain, apiUpload, type DetectTargetResponse, type EvaluateResponse, type ExploreResponse, type PredictResponse, type PreprocessResponse, type TrainResponse, type UploadResponse } from '@/lib/api'
 
 type Step = 'upload' | 'explore' | 'preprocess' | 'target' | 'features' | 'model' | 'train' | 'evaluate' | 'predict' | 'deploy'
 
@@ -22,19 +22,19 @@ export default function Page() {
   const [current, setCurrent] = useState<Step>('upload')
   const [session, setSession] = useState<string | null>(null)
   const [columns, setColumns] = useState<string[]>([])
-  const [exploreStats, setExploreStats] = useState<any | null>(null)
+  const [exploreStats, setExploreStats] = useState<ExploreResponse | null>(null)
   const [uploading, setUploading] = useState(false)
   const [progress, setProgress] = useState(0)
-  const [preprocessResult, setPreprocessResult] = useState<any | null>(null)
+  const [preprocessResult, setPreprocessResult] = useState<PreprocessResponse | null>(null)
   const [target, setTarget] = useState<string>('')
   const [problemType, setProblemType] = useState<string>('')
   const [classDist, setClassDist] = useState<Record<string, number> | null>(null)
   const [selectedModel, setSelectedModel] = useState<string>('Random Forest')
   const [training, setTraining] = useState(false)
   const [trainEpoch, setTrainEpoch] = useState(0)
-  const [trainMetrics, setTrainMetrics] = useState<any | null>(null)
-  const [evalMetrics, setEvalMetrics] = useState<any | null>(null)
-  const [predictResult, setPredictResult] = useState<any | null>(null)
+  const [trainMetrics, setTrainMetrics] = useState<TrainResponse | null>(null)
+  const [evalMetrics, setEvalMetrics] = useState<EvaluateResponse | null>(null)
+  const [predictResult, setPredictResult] = useState<PredictResponse | null>(null)
 
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -98,7 +98,7 @@ export default function Page() {
 
   async function onDetectTarget() {
     if (!session || !target) return
-    const res = await apiDetectTarget(session, target)
+    const res: DetectTargetResponse = await apiDetectTarget(session, target)
     setProblemType(res.problem_type)
     setClassDist(res.class_distribution || null)
   }
@@ -110,7 +110,7 @@ export default function Page() {
     setTrainMetrics(null)
     const maxEpoch = 50
     const ticker = setInterval(() => setTrainEpoch(prev => Math.min(prev + 1, maxEpoch)), 100)
-    const res = await apiTrain(session, { model_name: selectedModel })
+    const res: TrainResponse = await apiTrain(session, { model_name: selectedModel })
     setTrainMetrics(res)
     clearInterval(ticker)
     setTraining(false)
@@ -118,7 +118,7 @@ export default function Page() {
 
   async function onEvaluate() {
     if (!session) return
-    const res = await apiEvaluate(session)
+    const res: EvaluateResponse = await apiEvaluate(session)
     setEvalMetrics(res)
   }
 
@@ -129,7 +129,7 @@ export default function Page() {
       const v = form.get(c)
       features[c] = v === null ? null : (v as string)
     })
-    const res = await apiPredict(session, features)
+    const res: PredictResponse = await apiPredict(session, features)
     setPredictResult(res)
   }
 
