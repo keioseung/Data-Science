@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --gradient-start: #667eea;
+  --gradient-end: #764ba2;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+}
+
+.card-glass {
+  @apply bg-white/95 backdrop-blur-xl rounded-2xl shadow-glass;
+}
+
+.btn {
+  @apply inline-flex items-center gap-2 font-semibold rounded-lg transition-all;
+}
+
+.btn-primary {
+  @apply btn text-white bg-gradient-to-br from-primary to-secondary hover:-translate-y-0.5 shadow;
+}
+
+.btn-secondary {
+  @apply btn bg-gray-100 text-gray-700 border border-gray-300 hover:bg-gray-200;
+}
+
+.metric-card {
+  @apply text-center rounded-xl shadow-sm bg-white p-5;
+}
+
+.upload-zone {
+  @apply border-2 border-dashed border-gray-300 rounded-2xl p-10 text-center cursor-pointer transition-all bg-gradient-to-br from-primary/5 to-secondary/5 hover:border-primary hover:from-primary/10 hover:to-secondary/10;
+}
+
+.section-enter {
+  animation: fadeIn 0.4s ease-in both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
