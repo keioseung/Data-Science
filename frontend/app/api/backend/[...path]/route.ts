@@ -44,7 +44,7 @@ async function proxy(request: Request, context: { params: { path: string[] } }) 
     init.body = bodyBuffer as any
   }
 
-  const res = await fetch(targetUrl, init)
+  const res = await fetch(targetUrl, { ...init, cache: 'no-store' })
   const resHeaders = new Headers(res.headers)
   // remove hop-by-hop
   HOP_BY_HOP.forEach(h => resHeaders.delete(h))
