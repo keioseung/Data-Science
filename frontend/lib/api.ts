@@ -1,5 +1,6 @@
 // Detect runtime base URL reliably: prefer env, then window for client, fallback localhost for dev
-export const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || (typeof window !== 'undefined' ? (window as any).__API_BASE__ || '' : '') || 'http://localhost:8000'
+// Prefer edge proxy path so frontend always talks to same origin; backend base is configured server-side
+export const API_BASE = '/api/backend'
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, init)
